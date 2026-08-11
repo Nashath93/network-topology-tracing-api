@@ -59,6 +59,7 @@ class Interface(models.Model):
         max_length=255,
     )
 
+    """a device can have many interfaces"""
     device = models.ForeignKey(
         Device,
         on_delete=models.CASCADE,
@@ -126,7 +127,7 @@ class Connection(models.Model):
     )
 
     def is_point_to_point(self):
-        
+
         if self.start_id == self.end_id:
             raise ValidationError(
                 "A connection must be point-to-point between two Interfaces"
