@@ -74,3 +74,40 @@ class ConnectionTraceView(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
+        elif type == "site":
+            connections = Connection.objects.filter(
+                Q(start__device__site__id = id) |
+                Q(end__device__site__id = id)
+            ).distinct()
+
+            interfaces = Interface.objects.filter(
+                Q(device__site__id=id)
+            ).distinct()
+
+            devices = Device.objects.filter(
+                Q(site_id = id)
+            ).distinct()
+
+            connection_serializer = ConnectionSerializer(
+                connections,
+                many=True,
+            )
+
+            interface_serializer = InterfaceSerializer(
+                interfaces,
+                many=True,
+            )
+
+            devices_serializer = DeviceSerializer(
+                devices,
+                many=True,
+            )
+
+            return Response(
+                data={
+                    "devices": devices_serializer.data,
+                    "interfaces": interface_serializer.data,
+                    "connections": connection_serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
