@@ -47,3 +47,30 @@ class ConnectionTraceView(APIView):
             return Response({
                 "connections": serializer.data
             })
+        
+        elif type == "device":
+            interfaces = Interface.objects.filter(
+                Q(device_id=id)
+            )
+            connections = Connection.objects.filter(
+                Q(start__device__id=id) | 
+                Q(end__device__id=id)
+            ).distinct()
+                
+            connection_serializer = ConnectionSerializer(
+                connections,
+                many=True,
+            )
+
+            interface_serializer = InterfaceSerializer(
+                interfaces,
+                many=True,
+            )
+
+            return Response(
+                data={
+                    "interfaces": interface_serializer.data,
+                    "connections": connection_serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
