@@ -72,17 +72,31 @@ http://127.0.0.1:8000/api/
 ```
 ---
 # Assumptions
+
+### 1. A connection cannot loop back to the same interface
+### 2. A Site object cannot be deleted while it is referenced by one or more Devices
+### 3. An Interface object cannot be deleted while it is referenced as the start or end of an existing connection
+### 4. SQLite database is used for local development
+### 5. Postman Client is used for local API connection testing
+### 6. Internet speed is represents in Mbps
+
 ---
 # High-Level Design
+
+The task models network infrastructure components using the following relational schema relationships:
+
+Data Model Relationship Diagram:
+
+![ Data Model Relationship Diagram is at: ./images/schema_relationship.jpeg ](./images/schema_relationship.jpeg)
 
 ```text
 Site
  │
- │ 1:N
+ │ 1:M
  ▼
 Device
  │
- │ 1:N
+ │ 1:M
  ▼
 Interface
  │
@@ -90,5 +104,22 @@ Interface
  ▼
 Connection
 ```
+
+### One to One (1:1) Relationships
+
+* A **Device** belongs to a **Site**
+* An **Interface** belongs to a **Device**
+
+### One to Many (1:M) Relationships
+
+* A **Site** can have multiple **Devices**
+* A **Device** can have multiple **Interfaces**.
+
+> **Note:** A **Connection** represents a strictly point-to-point conection between two **Interfasces**
+
+
+
+
+
 
 
