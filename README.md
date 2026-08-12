@@ -204,9 +204,43 @@ interface
 
 ### Interface tracing
 
+Returns connections where the specified Interface is either the start or end endpoint.
+
 ```text
 GET /api/trace/?type=interface&id=2
 ```
 
+### Device tracing
+
+Returns connections where either endpoint belongs to an Interface on the specified Device.
+
+```text
+GET /api/trace/?type=device&id=2
+```
+
+### Site tracing
+
+Returns connections where either endpoint belongs to a Device within the specified Site.
+
+```text
+GET /api/trace/?type=site&id=2
+```
+
+# Data Integrity and Validation
+
+Important constraints include:
+
+- Site names are unique.
+- Device names are unique.
+- Device serial numbers are unique.
+- Interface names are unique within a Device.
+- Interface speed must be a positive integer representing Mbps.
+- Connection identifiers are unique.
+- Connection identifiers are alphanumeric.
+- Connection start and end endpoints must reference valid Interfaces.
+- An Interface supplied for a Connection must belong to the supplied Device.
+- The supplied Device must belong to the supplied Site.
+- A Connection cannot connect an Interface to itself.
+- Status fields use predefined choices to prevent arbitrary values.
 
 
