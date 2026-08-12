@@ -185,4 +185,28 @@ Create a Site using Postman Client:
 
    The newly created Site should appear in the response.
 
+# Connection Tracing Endpoint (Custom Analytics)
+
+The API provides a custom endpoint URL that allows network operators to isolate exactly what connections are
+passing through a specific infrastructure element.
+
+Endpoint URL:
+```text
+GET /api/trace/?type=<type>&id=<id>
+```
+
+Trace type:
+```text
+site
+device
+interface
+```
+
+### Interface tracing
+
+```text
+GET /api/trace/?type=interface&id=2
+```
+
+
 
