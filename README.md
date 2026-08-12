@@ -73,12 +73,17 @@ http://127.0.0.1:8000/api/
 ---
 # Assumptions
 
-### 1. A connection cannot loop back to the same interface
-### 2. A Site object cannot be deleted while it is referenced by one or more Devices
-### 3. An Interface object cannot be deleted while it is referenced as the start or end of an existing connection
-### 4. SQLite database is used for local development
-### 5. Postman Client is used for local API connection testing
-### 6. Internet speed is represents in Mbps
+1. A connection cannot loop back to the same interface
+
+2. A Site object cannot be deleted while it is referenced by one or more Devices
+
+3. An Interface object cannot be deleted while it is referenced as the start or end of an existing connection
+
+4. SQLite database is used for local development
+
+5. Postman Client is used for local API connection testing
+
+6. Internet speed is represents in Mbps
 
 ---
 # High-Level Design
@@ -115,9 +120,69 @@ Connection
 
 > **Note:** A **Connection** represents a strictly point-to-point conection between two **Interfasces**
 
+# API and Endpoints
 
+| Resources | Endpoint |
+|---|---|
+| Sites | `http://127.0.0.1/api/sites`|
+| Devices |`http://127.0.0.1/api/devices`|
+| Interfaces |`http://127.0.0.1/api/interfaces`|
+| Connections |`http://127.0.0.1/api/connections`|
 
+# Example
 
+Create a Site using Postman Client:
 
+1. Open **Postman Client**.
+
+2. Create a new HTTP request.
+
+3. Select the HTTP method as **POST**.
+
+4. Set the request URL to:
+
+   ```text
+   http://127.0.0.1:8000/api/sites/
+   ```
+
+5. Go to the **Headers** tab and add the following header:
+
+   | Key | Value |
+   |---|---|
+   | Content-Type | application/json |
+
+6. Go to the **Body** tab:
+   - Select **raw**
+   - Select **JSON** as the content type
+   - Paste the following payload:
+
+   ```json
+   {
+     "name": "Los Angeles Primary Data Centre",
+     "description": "Primary network site in Los Angeles",
+     "status": "active"
+   }
+   ```
+
+7. Click **Send**.
+
+8. If the Site is created successfully, the API will return **HTTP 201 Created** with a response similar to:
+
+   ```json
+   {
+     "id": 1,
+     "name": "Los Angeles Primary Data Centre",
+     "description": "Primary network site in Los Angeles",
+     "status": "active"
+   }
+   ```
+
+9. To verify the Site was created, send a **GET** request to:
+
+   ```text
+   http://127.0.0.1:8000/api/sites/
+   ```
+
+   The newly created Site should appear in the response.
 
 
