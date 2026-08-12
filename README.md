@@ -85,9 +85,7 @@ http://127.0.0.1:8000/api/
 
 The task models network infrastructure components using the following relational schema relationships:
 
-Data Model Relationship Diagram:
-
-![ Data Model Relationship Diagram is at: ./images/schema_relationship.jpeg ](./images/schema_relationship.jpeg)
+Data Model Relationship Diagram is at: `./images/schema_relationship.jpeg`
 
 ```text
 Site
