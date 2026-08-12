@@ -34,9 +34,9 @@ class InterfaceSerializer(serializers.ModelSerializer):
         ]
 
 class StartEndSerializer(serializers.Serializer):
-    site = serializers.IntegerField()
-    device = serializers.IntegerField()
-    interface = serializers.IntegerField()
+    site = serializers.IntegerField(source="device.site_id")
+    device = serializers.IntegerField(source="device_id")
+    interface = serializers.IntegerField(source="id")
 
     def validate(self, attrs):
         site_id = attrs["site"]
@@ -58,6 +58,9 @@ class ConnectionSerializer(serializers.ModelSerializer):
 
     start = StartEndSerializer()
     end = StartEndSerializer()
+
+    print("---------")
+    print(f"Start: {start}")
 
     class Meta:
         model = Connection
